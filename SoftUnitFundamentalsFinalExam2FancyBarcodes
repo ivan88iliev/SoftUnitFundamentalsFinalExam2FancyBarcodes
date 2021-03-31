@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+
+namespace SoftUnitFundamentalsFinalExam
+{
+    class Program
+    {
+        private static string casint;
+
+        static void Main(string[] args)
+        {
+            //SoftUnitFundamentalsFinalExam2FancyBarcodes
+
+            int n = int.Parse(Console.ReadLine());
+
+            string patternBarcode = @"(?:@#+)([A-Z][A-Za-z0-9]{4,}[A-Z])(?:@#+)";
+            Regex barcodeRegex = new Regex(patternBarcode);
+
+            for (int i = 0; i < n; i++)
+            {
+                string input = Console.ReadLine();
+                Match barcode = barcodeRegex.Match(input);
+                if (!barcode.Success)
+                {
+                    Console.WriteLine("Invalid barcode");
+                    continue;
+                }
+                Regex digitsRegex = new Regex(@"[0-9]");
+                MatchCollection digitsMatch = digitsRegex.Matches(barcode.Groups[1].ToString());
+                if (digitsMatch.Count > 0)
+                {
+                    StringBuilder currentBarcode = new StringBuilder();
+                    foreach (Match item in digitsMatch)
+                    {
+                        currentBarcode = currentBarcode.Append(item.ToString());
+                    }
+                    Console.WriteLine($"Product group: {currentBarcode}");
+                }
+                else
+                {
+                    Console.WriteLine("Product group: 00");
+                }
+
+            }
+
+
+
+
+
+            //
+        }
+    }
+}
